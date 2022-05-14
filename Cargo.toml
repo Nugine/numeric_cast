@@ -2,5 +2,10 @@
 name = "numeric_cast"
 version = "0.1.0-dev"
 edition = "2021"
-
-[dependencies]
+description = "safe cast between numbers"
+license = "MIT"
+repository = "https://github.com/Nugine/numeric_cast"
+readme = "README.md"
+documentation = "https://docs.rs/numeric_cast"
+keywords = ["cast"]
+categories = ["rust-patterns", "no-std"]
