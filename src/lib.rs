@@ -2,10 +2,14 @@
 //!
 //! The extension trait [`NumericCast`] adds a generic method [`numeric_cast`](NumericCast::numeric_cast) for all number types.
 //! The method allows users to safely cast a number to another type without losing precision.
+//!
 //! If the value can not be represented by the target type,
 //! the method will panic with a message which tells the value, the source type name and the target type name.
 //!
 //! As [`numeric_cast`](NumericCast::numeric_cast) is marked by `track_caller`, the panic location will be exactly where you call the method.
+//!
+//! This library optimizes for code bloat. In most use cases, numeric cast always succeeds at runtime,
+//! so the panic function is split from normal control flow to reduce performance impact.
 //!
 //! # Examples
 //!
