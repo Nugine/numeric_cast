@@ -4,7 +4,7 @@
 [![Documentation]][docs.rs] 
 ![License]
 
-Safe cast between numbers.
+Safely cast between numbers.
 
 [crates.io]: https://crates.io/crates/numeric_cast
 [Latest Version]: https://img.shields.io/crates/v/numeric_cast.svg
