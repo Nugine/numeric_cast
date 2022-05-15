@@ -2,6 +2,9 @@
 // ---
 #![no_std]
 
+use core::any::type_name;
+use core::fmt;
+
 pub trait NumericCast: Sized {
     fn numeric_cast<T: NumericCastFrom<Self>>(self) -> T {
         T::numeric_cast_from(self)
@@ -20,18 +23,6 @@ impl_numeric_cast!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isiz
 
 pub trait NumericCastFrom<T>: Sized {
     fn numeric_cast_from(val: T) -> Self;
-}
-
-#[cold]
-#[inline(never)]
-fn numeric_cast_overflow(val: u128, lhs: &'static str, rhs: &'static str) -> ! {
-    panic!("numeric_cast_overflow: val={val} lhs={lhs} rhs={rhs}")
-}
-
-#[cold]
-#[inline(never)]
-fn numeric_cast_underflow(val: i128, lhs: &'static str, rhs: &'static str) -> ! {
-    panic!("numeric_cast_underflow: val={val} lhs={lhs} rhs={rhs}")
 }
 
 macro_rules! cast {
@@ -55,7 +46,7 @@ macro_rules! cast {
         impl NumericCastFrom<$lhs> for $rhs {
             fn numeric_cast_from(val: $lhs) -> Self {
                 if val > <$rhs>::MAX as $lhs {
-                    numeric_cast_overflow(val as _, stringify!($lhs), stringify!($rhs))
+                    numeric_cast_failure::<$lhs, $rhs>(val)
                 }
                 val as _
             }
@@ -66,7 +57,7 @@ macro_rules! cast {
         impl NumericCastFrom<$lhs> for $rhs {
             fn numeric_cast_from(val: $lhs) -> Self {
                 if val < <$rhs>::MIN as $lhs {
-                    numeric_cast_underflow(val as _, stringify!($lhs), stringify!($rhs))
+                    numeric_cast_failure::<$lhs, $rhs>(val)
                 }
                 val as _
             }
@@ -77,10 +68,10 @@ macro_rules! cast {
         impl NumericCastFrom<$lhs> for $rhs {
             fn numeric_cast_from(val: $lhs) -> Self {
                 if val < <$rhs>::MIN as $lhs {
-                    numeric_cast_underflow(val as _, stringify!($lhs), stringify!($rhs))
+                    numeric_cast_failure::<$lhs, $rhs>(val)
                 }
                 if val > <$rhs>::MAX as $lhs {
-                    numeric_cast_overflow(val as _, stringify!($lhs), stringify!($rhs))
+                    numeric_cast_failure::<$lhs, $rhs>(val)
                 }
                 val as _
             }
@@ -254,6 +245,23 @@ cast!(isize => i32:    16: safe, 32: safe, 64: both);
 cast!(isize => i64:    safe);
 cast!(isize => i128:   safe);
 cast!(isize => isize:  nop);
+
+#[cold]
+#[track_caller]
+#[inline(never)]
+fn numeric_cast_failure<T, U>(val: T) -> !
+where
+    T: fmt::Display,
+{
+    panic_failure(&val, type_name::<T>(), type_name::<U>())
+}
+
+#[cold]
+#[track_caller]
+#[inline(never)]
+fn panic_failure(val: &dyn fmt::Display, lhs: &'static str, rhs: &'static str) -> ! {
+    panic!("numeric_cast_failure: lhs: {lhs}, rhs: {rhs}, val: {val}")
+}
 
 #[cfg(test)]
 mod tests {
