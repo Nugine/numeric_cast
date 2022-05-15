@@ -1,4 +1,4 @@
-#![deny(clippy::all)]
+#![deny(clippy::all, clippy::missing_inline_in_public_items)]
 // ---
 #![no_std]
 
@@ -6,6 +6,8 @@ use core::any::type_name;
 use core::fmt;
 
 pub trait NumericCast: Sized {
+    #[inline]
+    #[track_caller]
     fn numeric_cast<T: NumericCastFrom<Self>>(self) -> T {
         T::numeric_cast_from(self)
     }
@@ -28,6 +30,8 @@ pub trait NumericCastFrom<T>: Sized {
 macro_rules! cast {
     ($lhs: ty => $rhs: ty: nop) => {
         impl NumericCastFrom<$lhs> for $rhs {
+            #[inline]
+            #[track_caller]
             fn numeric_cast_from(val: $lhs) -> $rhs {
                 val
             }
@@ -36,6 +40,8 @@ macro_rules! cast {
 
     ($lhs: ty => $rhs: ty: safe) => {
         impl NumericCastFrom<$lhs> for $rhs {
+            #[inline]
+            #[track_caller]
             fn numeric_cast_from(val: $lhs) -> $rhs {
                 val as _
             }
@@ -44,6 +50,8 @@ macro_rules! cast {
 
     ($lhs: ty => $rhs: ty: overflow) => {
         impl NumericCastFrom<$lhs> for $rhs {
+            #[inline]
+            #[track_caller]
             fn numeric_cast_from(val: $lhs) -> Self {
                 if val > <$rhs>::MAX as $lhs {
                     numeric_cast_failure::<$lhs, $rhs>(val)
@@ -55,6 +63,8 @@ macro_rules! cast {
 
     ($lhs: ty => $rhs: ty: underflow) => {
         impl NumericCastFrom<$lhs> for $rhs {
+            #[inline]
+            #[track_caller]
             fn numeric_cast_from(val: $lhs) -> Self {
                 if val < <$rhs>::MIN as $lhs {
                     numeric_cast_failure::<$lhs, $rhs>(val)
@@ -66,6 +76,8 @@ macro_rules! cast {
 
     ($lhs: ty => $rhs: ty: both) => {
         impl NumericCastFrom<$lhs> for $rhs {
+            #[inline]
+            #[track_caller]
             fn numeric_cast_from(val: $lhs) -> Self {
                 if val < <$rhs>::MIN as $lhs {
                     numeric_cast_failure::<$lhs, $rhs>(val)
