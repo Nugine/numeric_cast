@@ -3,6 +3,7 @@
 [![Latest Version]][crates.io]
 [![Documentation]][docs.rs] 
 ![License]
+[![Unsafe Forbidden][unsafe-forbidden-badge]][unsafe-forbidden-url]
 
 Safely cast between numbers.
 
@@ -11,5 +12,7 @@ Safely cast between numbers.
 [Documentation]: https://docs.rs/numeric_cast/badge.svg
 [docs.rs]: https://docs.rs/numeric_cast
 [License]: https://img.shields.io/crates/l/numeric_cast.svg
+[unsafe-forbidden-badge]: https://img.shields.io/badge/unsafe-forbidden-success.svg
+[unsafe-forbidden-url]: https://github.com/rust-secure-code/safety-dance/
 
 Documentation: <https://docs.rs/numeric_cast>

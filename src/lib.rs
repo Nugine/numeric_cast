@@ -29,6 +29,7 @@
 //! let len: usize = n.numeric_cast(); // panic here
 //! ```
 //!
+#![forbid(unsafe_code)]
 #![deny(clippy::all, clippy::missing_inline_in_public_items)]
 // ---
 #![no_std]
