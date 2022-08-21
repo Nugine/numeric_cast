@@ -284,7 +284,10 @@ where
 #[track_caller]
 #[inline(never)]
 fn panic_failure(val: &dyn fmt::Display, lhs: &'static str, rhs: &'static str) -> ! {
-    panic!("numeric_cast_failure: lhs: {lhs}, rhs: {rhs}, val: {val}")
+    panic!(
+        "numeric_cast_failure: lhs: {}, rhs: {}, val: {}",
+        lhs, rhs, val
+    )
 }
 
 #[cfg(test)]
