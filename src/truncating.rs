@@ -61,3 +61,21 @@ truncating_cast!(i128 => i16 );
 truncating_cast!(i64  => i32 );
 truncating_cast!(i128 => i32 );
 truncating_cast!(i128 => i64 );
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn truncating() {
+        let x: i16 = -1;
+        let y: i8 = truncating_cast(x);
+        assert_eq!(y, -1);
+
+        let y: u8 = 256u32.truncating_cast();
+        assert_eq!(y, 0);
+
+        let y = 257u16.truncating_cast::<u8>();
+        assert_eq!(y, 1);
+    }
+}

@@ -37,3 +37,22 @@ wrapping_cast!(i32   => u32  );
 wrapping_cast!(i64   => u64  );
 wrapping_cast!(i128  => u128 );
 wrapping_cast!(isize => usize);
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn wrapping() {
+        let x: i8 = -1;
+
+        let y: u8 = x.wrapping_cast();
+        assert_eq!(y, 255);
+
+        let y = wrapping_cast(usize::MAX / 2);
+        assert_eq!(y, isize::MAX);
+
+        let y: usize = wrapping_cast(isize::MAX);
+        assert_eq!(y, usize::MAX / 2);
+    }
+}

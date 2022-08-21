@@ -61,3 +61,21 @@ extending_cast!(i16 => i128 );
 extending_cast!(i32 => i64  );
 extending_cast!(i32 => i128 );
 extending_cast!(i64 => i128 );
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn extending() {
+        let x: i8 = -1;
+        let y: i16 = extending_cast(x);
+        assert_eq!(y, -1);
+
+        let y: u32 = 255u8.extending_cast();
+        assert_eq!(y, 255);
+
+        let y = 255u8.extending_cast::<u32>();
+        assert_eq!(y, 255);
+    }
+}
