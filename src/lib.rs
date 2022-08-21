@@ -43,3 +43,6 @@ pub use self::panicking::*;
 
 mod wrapping;
 pub use self::wrapping::*;
+
+mod extending;
+pub use self::extending::*;
