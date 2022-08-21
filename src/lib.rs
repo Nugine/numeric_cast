@@ -46,3 +46,6 @@ pub use self::wrapping::*;
 
 mod extending;
 pub use self::extending::*;
+
+mod truncating;
+pub use self::truncating::*;
