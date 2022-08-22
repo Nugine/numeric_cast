@@ -330,6 +330,6 @@ mod tests {
     #[should_panic]
     fn underflow() {
         let x: i16 = -1;
-        let _ = x.numeric_cast::<u8>();
+        let _: u8 = numeric_cast(x);
     }
 }
