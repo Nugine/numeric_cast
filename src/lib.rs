@@ -33,13 +33,13 @@
 #![deny(
     clippy::all,
     clippy::missing_inline_in_public_items,
-    clippy::must_use_candidate
+    clippy::must_use_candidate //
 )]
 // ---
 #![cfg_attr(not(test), no_std)]
 
-mod panicking;
-pub use self::panicking::*;
+mod lossless;
+pub use self::lossless::*;
 
 mod wrapping;
 pub use self::wrapping::*;
@@ -49,3 +49,13 @@ pub use self::extending::*;
 
 mod truncating;
 pub use self::truncating::*;
+
+mod rounding;
+pub use self::rounding::*;
+
+#[cold]
+#[track_caller]
+#[inline(never)]
+fn panic_failure(msg: &'static str, val: &dyn core::fmt::Display, lhs: &'static str, rhs: &'static str) -> ! {
+    panic!("{}: lhs: {}, rhs: {}, val: {}", msg, lhs, rhs, val)
+}

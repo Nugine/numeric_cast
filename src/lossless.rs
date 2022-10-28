@@ -277,17 +277,7 @@ fn numeric_cast_failure<T, U>(val: T) -> !
 where
     T: fmt::Display,
 {
-    panic_failure(&val, type_name::<T>(), type_name::<U>())
-}
-
-#[cold]
-#[track_caller]
-#[inline(never)]
-fn panic_failure(val: &dyn fmt::Display, lhs: &'static str, rhs: &'static str) -> ! {
-    panic!(
-        "numeric_cast_failure: lhs: {}, rhs: {}, val: {}",
-        lhs, rhs, val
-    )
+    crate::panic_failure("numeric_cast_failure", &val, type_name::<T>(), type_name::<U>())
 }
 
 #[cfg(test)]
