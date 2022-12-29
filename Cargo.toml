@@ -2,7 +2,7 @@
 name = "numeric_cast"
 version = "0.2.1"
 edition = "2021"
-description = "safe cast between numbers"
+description = "safely cast between numbers"
 license = "MIT"
 repository = "https://github.com/Nugine/numeric_cast"
 readme = "README.md"
