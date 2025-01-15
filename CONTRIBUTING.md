@@ -12,8 +12,8 @@
 ### Download source code
 
 ```bash
-git clone https://github.com/Nugine/rust-template.git
-cd rust-template
+git clone https://github.com/Nugine/numeric_cast.git
+cd numeric_cast
 ```
 
 ### Run basic checks and tests
