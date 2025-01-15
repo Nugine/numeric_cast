@@ -5,8 +5,6 @@
 ![License]
 [![Unsafe Forbidden][unsafe-forbidden-badge]][unsafe-forbidden-url]
 
-Safely cast between numbers.
-
 [crates.io]: https://crates.io/crates/numeric_cast
 [Latest Version]: https://img.shields.io/crates/v/numeric_cast.svg
 [Documentation]: https://docs.rs/numeric_cast/badge.svg
@@ -15,4 +13,11 @@ Safely cast between numbers.
 [unsafe-forbidden-badge]: https://img.shields.io/badge/unsafe-forbidden-success.svg
 [unsafe-forbidden-url]: https://github.com/rust-secure-code/safety-dance/
 
+Safely cast between numbers.
+
 Documentation: <https://docs.rs/numeric_cast>
+
+## Contributing
+
++ [Development Guide](./CONTRIBUTING.md)
++ [Code of Conduct](./CODE_OF_CONDUCT.md)
