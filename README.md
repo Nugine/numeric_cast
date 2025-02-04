@@ -20,4 +20,3 @@ Documentation: <https://docs.rs/numeric_cast>
 ## Contributing
 
 + [Development Guide](./CONTRIBUTING.md)
-+ [Code of Conduct](./CODE_OF_CONDUCT.md)
