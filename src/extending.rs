@@ -26,6 +26,7 @@ macro_rules! impl_extending_cast {
 impl_extending_cast!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize,);
 
 pub trait ExtendingCastFrom<T>: Sized {
+    #[must_use]
     fn extending_cast_from(val: T) -> Self;
 }
 
@@ -33,7 +34,6 @@ macro_rules! extending_cast {
     ($lhs: ty=>$rhs:ty) => {
         impl ExtendingCastFrom<$lhs> for $rhs {
             #[inline(always)]
-            #[must_use]
             fn extending_cast_from(val: $lhs) -> $rhs {
                 val as $rhs
             }

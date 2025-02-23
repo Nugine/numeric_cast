@@ -9,6 +9,7 @@ where
 
 pub trait WrappingCast: Sized {
     type Output;
+    #[must_use]
     fn wrapping_cast(self) -> Self::Output;
 }
 
@@ -17,7 +18,6 @@ macro_rules! wrapping_cast {
         impl WrappingCast for $lhs {
             type Output = $rhs;
             #[inline(always)]
-            #[must_use]
             fn wrapping_cast(self) -> Self::Output {
                 self as $rhs
             }

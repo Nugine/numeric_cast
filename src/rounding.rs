@@ -29,6 +29,7 @@ macro_rules! impl_rounding_cast {
 impl_rounding_cast!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize, f32, f64,);
 
 pub trait RoundingCastFrom<T>: Sized {
+    #[must_use]
     fn rounding_cast_from(val: T) -> Self;
 }
 
@@ -42,7 +43,6 @@ macro_rules! rounding_cast {
     ($lhs: ty => $rhs:ty) => {
         impl RoundingCastFrom<$lhs> for $rhs {
             #[inline(always)]
-            #[must_use]
             fn rounding_cast_from(val: $lhs) -> $rhs {
                 val as $rhs
             }
@@ -51,7 +51,6 @@ macro_rules! rounding_cast {
     ($lhs: ty => $rhs: ty: inf) => {
         impl RoundingCastFrom<$lhs> for $rhs {
             #[inline(always)]
-            #[must_use]
             fn rounding_cast_from(val: $lhs) -> Self {
                 let ans = val as $rhs;
                 if ans.is_infinite() {
@@ -64,7 +63,7 @@ macro_rules! rounding_cast {
     ($lhs: ty => $rhs: ty: float) => {
         impl RoundingCastFrom<$lhs> for $rhs {
             #[inline(always)]
-            #[must_use]
+
             fn rounding_cast_from(val: $lhs) -> Self {
                 if val.is_nan() || val.is_infinite() {
                     rounding_cast_failure::<$lhs, $rhs>(val)
@@ -131,7 +130,6 @@ rounding_cast!(f32 => f64);
 
 impl RoundingCastFrom<f64> for f32 {
     #[inline(always)]
-    #[must_use]
     fn rounding_cast_from(val: f64) -> Self {
         let ans = val as f32;
         if val.is_nan() || val.is_infinite() || ans.is_infinite() {

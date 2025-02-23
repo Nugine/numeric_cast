@@ -31,6 +31,7 @@ macro_rules! impl_numeric_cast {
 impl_numeric_cast!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize,);
 
 pub trait NumericCastFrom<T>: Sized {
+    #[must_use]
     fn numeric_cast_from(val: T) -> Self;
 }
 
@@ -38,7 +39,6 @@ macro_rules! cast {
 ($lhs: ty => $rhs: ty: nop) => {
     impl NumericCastFrom<$lhs> for $rhs {
         #[inline(always)]
-        #[must_use]
         #[track_caller]
         fn numeric_cast_from(val: $lhs) -> $rhs {
             val
@@ -49,7 +49,6 @@ macro_rules! cast {
 ($lhs: ty => $rhs: ty: safe) => {
     impl NumericCastFrom<$lhs> for $rhs {
         #[inline(always)]
-        #[must_use]
         #[track_caller]
         fn numeric_cast_from(val: $lhs) -> $rhs {
             val as _
@@ -60,7 +59,6 @@ macro_rules! cast {
 ($lhs: ty => $rhs: ty: overflow) => {
     impl NumericCastFrom<$lhs> for $rhs {
         #[inline]
-        #[must_use]
         #[track_caller]
         fn numeric_cast_from(val: $lhs) -> Self {
             if val > <$rhs>::MAX as $lhs {
@@ -74,7 +72,6 @@ macro_rules! cast {
 ($lhs: ty => $rhs: ty: underflow) => {
     impl NumericCastFrom<$lhs> for $rhs {
         #[inline]
-        #[must_use]
         #[track_caller]
         fn numeric_cast_from(val: $lhs) -> Self {
             if val < <$rhs>::MIN as $lhs {
@@ -88,7 +85,6 @@ macro_rules! cast {
 ($lhs: ty => $rhs: ty: both) => {
     impl NumericCastFrom<$lhs> for $rhs {
         #[inline]
-        #[must_use]
         #[track_caller]
         fn numeric_cast_from(val: $lhs) -> Self {
             if val < <$rhs>::MIN as $lhs {

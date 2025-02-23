@@ -26,6 +26,7 @@ macro_rules! impl_truncating_cast {
 impl_truncating_cast!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize,);
 
 pub trait TruncatingCastFrom<T>: Sized {
+    #[must_use]
     fn truncating_cast_from(val: T) -> Self;
 }
 
@@ -33,7 +34,6 @@ macro_rules! truncating_cast {
     ($lhs: ty=>$rhs:ty) => {
         impl TruncatingCastFrom<$lhs> for $rhs {
             #[inline(always)]
-            #[must_use]
             fn truncating_cast_from(val: $lhs) -> $rhs {
                 val as $rhs
             }
